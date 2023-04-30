@@ -1,6 +1,6 @@
 # create class
 
-def encherir(self, previous_call, enchere):
+def encherir(previous_call, enchere):
     # This method is a bool that returns True if the player can bid or False if he can't
     # To bid he has to call a higher number of dice or a higher value of dice
     # If the player calls the same number of dice, he has to call a higher value
@@ -34,7 +34,7 @@ def encherir(self, previous_call, enchere):
     return False
 
 
-def encherir_palifico(self, previous_call, enchere):
+def encherir_palifico(previous_call, enchere):
     # with palifico, the player can call any number of dice with a minimum of 1
     # the first value of the dice has to be the same as the previous call
     if previous_call is None:
@@ -46,18 +46,36 @@ def encherir_palifico(self, previous_call, enchere):
     return False
 
 
-def dudo(self, previous_call, real_value):
+def dudo(previous_call, real_value):
     if previous_call.valeur <= real_value:
         return False
     return True
 
-def palifico(self, joueurs):
+
+def palifico(joueurs):
     for joueur in joueurs:
         if len(joueur.dices) == 1:
             return True
     return False
 
-def calza(self, previous_call, real_value):
+
+def calza(previous_call, real_value):
     if previous_call == real_value:
         return True
     return False
+
+
+def choice_limiter(limit_down, limit_up, text=None):
+    #Demander une valeur tant que la valeur n'est pas un INT
+    choice = None
+    if limit_up is None or limit_up > 50:
+        limit_up = 50
+    while not isinstance(choice, int) or not (limit_down <= choice <= limit_up):
+        try:
+            choice = int(input(text or f"Veuillez entrer un nombre entre {limit_down} et {limit_up}: "))
+        except ValueError:
+            print("Veuillez entrer un nombre entier")
+
+        if not (limit_down <= choice <= limit_up):
+            print(f"Veuillez entrer un nombre entre {limit_down} et {limit_up}")
+    return choice
